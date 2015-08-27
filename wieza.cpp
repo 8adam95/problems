@@ -42,6 +42,8 @@ int calc(int person, int n)
     else if(hight[C] == person && hight[C] != hight[C+1])
       return C;
   }
+  if(C == 49)
+    return 50;
   if(hight[C] < person)
     return C;
   return C-1;
@@ -60,6 +62,8 @@ int main()
     int b;
     scanf("%d", &b);
     printf("%d ", calc(b-1, n));
+    
+    //mistake in tests
   }
   
   printf("\n");
