@@ -39,7 +39,9 @@ int main()
   
   REP(i, he)
     if((ll)(i+1)*k != B[i]) 
-      return printf("%lld\n", (ll)(i+1)*k);
+      return printf("%lld\n", (ll)(i+1)*k), 0;
+    
+  printf("%lld\n", (he+1)*k);
   
   return 0;
 }
