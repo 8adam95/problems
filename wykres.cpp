@@ -24,6 +24,9 @@ vector<int> v1, v2, v3, v4;
 // 0 1
 // 0 2 
 // 1 2 
+// 1
+// 2
+// 0
 
 int main()
 {
@@ -61,7 +64,7 @@ int main()
 	v4.PB(2);
     }
   }
-  printf("%d\n", max((int)v1.size(), max((int)v2.size(), max((int)v3.size(), (int)v4.size()))));
+  printf("%d\n", max(1, max((int)v1.size(), max((int)v2.size(), max((int)v3.size(), (int)v4.size())))));
     
   return 0;
 }
