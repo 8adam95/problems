@@ -17,40 +17,51 @@ using namespace std;
 #define PB push_back
 
 const int MAXN = 1000006;
-int n, a[MAXN];
+int n;
+vector<int> v1, v2, v3, v4;
+
+// 0 1 2
+// 0 1
+// 0 2 
+// 1 2 
 
 int main()
 {
   scanf("%d", &n);
   FOR(i, 1, n)
-    scanf("%d", a+i);
-
-  FOR(i, 1, n)
-    if(a[i] == 0)
-    {
-      FOR(j, i+1, n)
-      {
-	if(a[j] == 1)
-	{
-	  FOR(k, j+1, n)
-	    if(a[k] == 2)
-	      return printf("3\n"), 0;
-	  return printf("2\n"), 0;
-	}
-      }
-      FOR(j, i+1, n)
-	if(a[j] == 2)
-	  return printf("2\n"), 0;
-    }
-  FOR(i, 1, n)
   {
-    if(a[i] == 1)
-      FOR(j, i+1, n)
-	if(a[j] == 2)
-	  return printf("2\n"), 0;
+    int a;
+    scanf("%d", &a);
+    if(a == 0)
+    {
+      if(v1.size() == 0)
+      {
+	v1.PB(0);
+	v2.PB(0);
+	v3.PB(0);
+      }
+    }
+    if(a == 1)
+    {
+      if(v1.size() == 1)
+      {
+	v1.PB(1);
+	v2.PB(1);
+      }
+      if(v4.size() == 0)
+	v4.PB(1);
+    }
+    if(a == 2)
+    {
+      if(v1.size() == 2)
+	v1.PB(2);
+      if(v3.size() == 1)
+	v3.PB(2);
+      if(v4.size() == 1)
+	v4.PB(2);
+    }
   }
-  printf("1\n");
- 
+  printf("%d\n", max((int)v1.size(), max((int)v2.size(), max((int)v3.size(), (int)v4.size()))));
     
   return 0;
 }
