@@ -32,7 +32,7 @@ int main()
   sort(a, a+n);
   FOR(i, 1, n)
     if(a[i-1] != i)
-      return printf("NIE\n");
+      return printf("NIE\n"), 0;
     
   printf("TAK\n");
     
