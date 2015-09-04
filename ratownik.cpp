@@ -20,9 +20,30 @@ using namespace std;
 
 
 
+bool pit(ll x, ll y, ll a,  ll b, ll k)
+{
+  if((max(a,x)-min(a,x))*(max(a,x)-min(a,x))+((max(b,y)-min(b,y))*(max(b,y)-min(b,y))) <= k*k)
+    return true;
+  return false;
+}
+
 int main()
 {
-  int n, k, x, y;
+  int n;
+  ll k, x, y;
+  
+  scanf("%d %lld %lld %lld", &n, &k, &x, &y);
+  
+  int cnt = 0;
+  
+  REP(i, n)
+  {
+    ll a, b;
+    scanf("%lld %lld", &a, &b);
+    cnt += pit(x,y, a, b, k);
+  }
+  
+  printf("%d\n", n-cnt);
   
   return 0;
 }
