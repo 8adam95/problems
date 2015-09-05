@@ -14,3 +14,16 @@ using namespace std;
 #define S second
 #define MP make_pair
 #define PB push_back
+
+int main()
+{
+  int a, b, n;
+  scanf("%d %d %d", &a, &b, &n);
+  int  weight = n/a;
+  weight += n/b;
+  weight -= n/((a*b)/__gcd(a, b));
+    
+  printf("%d\n", weight);
+  
+  return 0;
+}
