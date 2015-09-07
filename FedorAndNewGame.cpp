@@ -39,24 +39,23 @@ int main()
   pow2();
   
   int l = 20;
+  
   while(a[m] > 0)
-  {
-    if(a[m] >= tab[l])
-      res[l] = 1, a[m] -= tab[l], l--;
-    else
-      res[l] = 0, l--;
-  }  
+      res[l] = (a[m] >= tab[l]), a[m] -= (a[m] >= tab[l])*tab[l], l--;
+  
+  
   int sol = 0;
   REP(i, m)
   {
     int l = 20, resu = 0;
-    while(a[i] > 0)
+    while(l >= 0)
     {
       if(a[i] >= tab[l])
       {
 	if(res[l] == 0)
 	  resu++;
 	a[i] -= tab[l], l--;
+
       }
       else
       {
