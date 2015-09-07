@@ -14,7 +14,7 @@ using namespace std;
 #define FORD(I, A, B) for(int I = (A); I >= (B); I--)
 #define ll long long
 #define F first
-#define S second
+#define S 
 #define MP make_pair
 #define PB push_back
 
