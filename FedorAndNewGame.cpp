@@ -24,8 +24,8 @@ int n, m, k, a[MAXN], tab[MAXN], res[MAXN];
 
 void pow2()
 {
-  tab[1] = 1;
-  FOR(i, 2, 21)
+  tab[0] = 1;
+  FOR(i, 1, 21)
     tab[i] = tab[i-1]*2;
   
 }
@@ -41,7 +41,7 @@ int main()
   int l = 20;
   while(a[m] > 0)
   {
-    if(a[m] > tab[l])
+    if(a[m] >= tab[l])
       res[l] = 1, a[m] -= tab[l], l--;
     else
       res[l] = 0, l--;
@@ -52,7 +52,7 @@ int main()
     int l = 20, resu = 0;
     while(a[i] > 0)
     {
-      if(a[i] > tab[l])
+      if(a[i] >= tab[l])
       {
 	if(res[l] == 0)
 	  resu++;
@@ -60,7 +60,7 @@ int main()
       }
       else
       {
-	if(res[i] == 1)
+	if(res[l] == 1)
 	  resu++;
 	l--;
       }
