@@ -29,9 +29,9 @@ int main()
     int a;
     scanf("%d", &a);
     if(a < 0)
-      res += (n-1);
-    
+      res += (n-1); 
   }
+  printf("%lld\n", res);
   
   
   return 0;
