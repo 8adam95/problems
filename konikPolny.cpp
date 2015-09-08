@@ -17,3 +17,19 @@ using namespace std;
 #define S second
 #define MP make_pair
 #define PB push_back
+
+int main()
+{
+  int x, s;
+  ll res = 0;
+  scanf("%d %d", &x, &s);
+  while(s > 1 && x > 0)
+    x -= s, res++, s /= 2;
+  res += max(x, 0);
+  
+  printf("%lld\n", res);
+  
+  
+  
+  return 0;
+}
