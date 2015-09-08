@@ -17,9 +17,30 @@ using namespace std;
 #define MP make_pair
 #define PB push_back
 
+int x, a, l, k;
+pair<int, int> tab[150];
 
 int main()
 {
+  int n;
+  scanf("%d", &n);
+  REP(i, n)
+  {
+    scanf("%d %d", &tab[i].F, &tab[i].S);
+    if(tab[i].F < 0)
+      l++;
+    else
+      k++;
+  }
+  sort(tab, tab+n);
+  int res = 0;
+  for(int i = max(0, l-k-1); i <= min(n, l*2); i++)
+    res+= tab[i].S;
+  
+  printf("%d\n", res);
+  
+  
+  
 
   return 0;
 }
