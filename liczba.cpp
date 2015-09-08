@@ -20,8 +20,20 @@ using namespace std;
 
 int main()
 {
+  int n;
   scanf("%d", &n);
-  
+  FOR(i, 2, n)
+    if(n%i != 0)
+    {
+      printf("%d ", i);
+      break;
+    }
 
+  FORD(i, n, 1)
+    if(n%i != 0)
+    {
+      printf("%d\n", i);
+      break;
+    }
   return 0;
 }
