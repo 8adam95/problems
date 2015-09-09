@@ -17,7 +17,7 @@ using namespace std;
 #define MP make_pair
 #define PB push_back
 
-int n, , tab[1000006], res[1000006];
+int n, tab[1000006], res[1000006];
 ll result;
 
 int main()
