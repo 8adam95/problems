@@ -20,7 +20,14 @@ using namespace std;
 
 int main()
 {
-
+  int k, w, m;
+  scanf("%d %d %d", &k, &w, &m);
+  int res = (w-k)/m;
+  if(res*m+k < w)
+    res++;
+  
+  printf("%d\n", res);
+  
 
   return 0;
 }
