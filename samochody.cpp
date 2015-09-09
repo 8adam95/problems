@@ -17,7 +17,8 @@ using namespace std;
 #define MP make_pair
 #define PB push_back
 
-int n, result = 0, tab[1000006], res[1000006];
+int n, , tab[1000006], res[1000006];
+ll result;
 
 int main()
 {
@@ -38,7 +39,7 @@ int main()
       result += res[i+1];
   
     
-  printf("%d\n", result);
+  printf("%lld\n", result);
   
   return 0;
 }
