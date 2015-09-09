@@ -17,13 +17,28 @@ using namespace std;
 #define MP make_pair
 #define PB push_back
 
+int n, result = 0, tab[1000006], res[1000006];
+
 int main()
 {
   scanf("%d", &n);
   FOR(i, 1, n)
     scanf("%d", &tab[i]);
     
+  FORD(i, n, 1)
+  {
+    if(tab[i] == 1)
+      res[i] = res[i+1]+1;
+    else
+      res[i] = res[i+1];
+  }
+  
+  FOR(i, 1, n)
+    if(tab[i] == 0)
+      result += res[i+1];
+  
     
+  printf("%d\n", result);
   
   return 0;
 }
