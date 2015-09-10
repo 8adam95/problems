@@ -20,7 +20,16 @@ using namespace std;
 
 int main()
 {
-
+  int n, cnt = 0;
+  scanf("%d", &n);
+  REP(i, n)
+  {
+    int a, b;
+    scanf("%d %d", &a, &b);
+    if(a < b-1)
+      cnt++;
+  }
+  printf("%d\n", cnt);
 
   return 0;
 }
