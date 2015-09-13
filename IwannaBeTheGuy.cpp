@@ -36,7 +36,7 @@ int main()
 
   FOR(i, 1, n)
     if(!tab[i])
-      return printf("Oh, my keyborad!\n"), 0;
+      return printf("Oh, my keyboard!\n"), 0;
   printf("I become the guy.\n");
 
 
