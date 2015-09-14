@@ -19,16 +19,22 @@ using namespace std;
 #define MP make_pair
 #define PB push_back
 
+int maks;
+int tab[11][11], n;
+
 int main()
 {
-  int n1, n2, k1, k2;
-  scanf("%d %d %d %d", &n1, &n2, &k1, &k2);
-
-  if(n1 > n2)
-    printf("First\n");
-  else
-    printf("Second\n");
+  scanf("%d", &n);
+  maks = 1;
+  FOR(i, 1, n)
+    tab[i][1] = 1, tab[1][i] = 1;
+  FOR(i, 1, n)
+    FOR(j, 2, n)
+      tab[i][j] = tab[i][j-1] + tab[i-1][j], maks = max(maks, tab[i][j]);
+      
+      
+  printf("%d\n", maks);
   
-
+  
   return 0;
 }
