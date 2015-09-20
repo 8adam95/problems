@@ -17,3 +17,19 @@ using namespace std;
 #define S second
 #define MP make_pair
 #define PB push_back
+
+int main()
+{
+  
+  int n, m;
+  
+  scanf("%d %d", &n, &m);
+  if(n == m && m == 1)
+    return printf("1\n"), 0;
+  if(n-m+1 > m)
+    printf("%d\n", m+1);
+  else
+    printf("%d\n", m-1);
+  
+  return 0;
+}
