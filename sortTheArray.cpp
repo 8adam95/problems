@@ -38,7 +38,7 @@ int main()
       break;
     }
     
-  a[n] = 1000000000;  
+  a[n+1] = 1000000000;  
   
   FOR(i, start, n)
   {
@@ -49,22 +49,23 @@ int main()
     }
   }
   
-  printf("%d %d\n", start, end);
-
   FOR(i, 1, start-1)
     tab[i] = a[i], l = i;
-    
+   
+  l++;
+  
   FORD(i, end, start)
     tab[l++] = a[i];
   
   FOR(i, end+1, n)
     tab[i] = a[i];
+    
   
-  FOR(i, 1, n)
+  FOR(i, 1, n-1)
     if(tab[i+1] < tab[i])
       return printf("no\n"), 0;
   
-  printf("yes\n%d %d\n", start+1, end+1);
+  printf("yes\n%d %d\n", start, end);
     
     
   return 0;
