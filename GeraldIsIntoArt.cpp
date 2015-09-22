@@ -17,18 +17,18 @@ int main()
   scanf("%d %d", &a2, &b2);
   scanf("%d %d", &a3, &b3);
   
-  if(a2+a3 <= a1 && max(b2, b3) <= b1)
+  if(a2+a3 <= a1 && max(b2, b3) <= b1) //both are in normal position
     return printf("YES\n"), 0;
   if(b2+b3 <= b1 && max(a2, a3) <= a1)
     return printf("YES\n"), 0;
   
   
-  if(a2+b3 <= a1 && max(b2, a3) <= b1)
+  if(a2+b3 <= a1 && max(b2, a3) <= b1) // second is moved
     return printf("YES\n"), 0;
   if(b2+a3 <= a1 && max(a2, b3) <= b1)
     return printf("YES\n"), 0;
   
-  if(b2+a3 <= a1 && max(a2, b3) <= b1)
+  if(b2+a3 <= a1 && max(a2, b3) <= b1) // 
     return printf("YES\n"), 0;
   if(a2+b3 <= b1 && max(b2, a3) <= a1)
     return printf("YES\n"), 0;
@@ -37,6 +37,30 @@ int main()
     return printf("YES\n"), 0;
   if(a2+a3 <= b1 && max(b2, b3) <= a1)
     return printf("YEs\n"), 0;
+  
+  swap(a1, b1);
+  
+  if(a2+a3 <= a1 && max(b2, b3) <= b1) //both are in normal position
+    return printf("YES\n"), 0;
+  if(b2+b3 <= b1 && max(a2, a3) <= a1)
+    return printf("YES\n"), 0;
+  
+  
+  if(a2+b3 <= a1 && max(b2, a3) <= b1) // second is moved
+    return printf("YES\n"), 0;
+  if(b2+a3 <= a1 && max(a2, b3) <= b1)
+    return printf("YES\n"), 0;
+  
+  if(b2+a3 <= a1 && max(a2, b3) <= b1) // 
+    return printf("YES\n"), 0;
+  if(a2+b3 <= b1 && max(b2, a3) <= a1)
+    return printf("YES\n"), 0;
+  
+  if(b2+b3 <= a1 && max(a2, a3) <= a1)
+    return printf("YES\n"), 0;
+  if(a2+a3 <= b1 && max(b2, b3) <= a1)
+    return printf("YEs\n"), 0;
+  
   
   
   
