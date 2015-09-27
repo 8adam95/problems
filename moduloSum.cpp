@@ -20,23 +20,23 @@ using namespace std;
 
 const int MAXN = 1000006;
 
-int n, m, a[MAXN];
 vector<int> v;
+int a[MAXN];
 bool ok[MAXN];
 
 int main()
 {
+  int n, m;
   scanf("%d %d", &n, &m);
   FOR(i, 1, n)
     scanf("%d", &a[i]);
-   
-    
+  
   FOR(i, 1, n)
   {
-    int si = v.size();
-    REP(j, si)
+    int s = v.size();
+    REP(j, s)
     {
-      int h = (a[i] + v[j])%m;
+      int h = (a[i]+v[j])%m;
       if(!ok[h])
       {
 	ok[h] = true;
