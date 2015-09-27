@@ -18,26 +18,24 @@ using namespace std;
 #define MP make_pair
 #define PB push_back
 
-const int MAXN = 1004;
-
 int n;
-bool isPrime[MAXN];
+bool isPrime[1005];
 vector<int> ans;
 
 int main()
 {
   scanf("%d", &n);
+  
   FOR(i, 1, 1000)
     isPrime[i] = true;
     
-    isPrime[0] = isPrime[1] = false;
-    
-  for(int i = 2; i*i <= n; i++)
+  isPrime[1] = isPrime[0] = false;
+  
+  for(int i = 1; i <= 1000; i++)
     if(isPrime[i])
-      for(int j = i*i; j <= n; j+=i)
+      for(int j = 2*i; j <= 1000; j+=i)
 	isPrime[j] = false;
-
-
+  
   for(int i = 1; i <= n; i++)
     if(isPrime[i])
     {
@@ -45,10 +43,11 @@ int main()
       while(q <= n/i)
 	q *= i, ans.PB(q);
     }
-  
   printf("%d\n", (int)ans.size());
-  for(int i = 0; i < (int)ans.size(); i++)
+  REP(i, ans.size())
     printf("%d ", ans[i]);
+  
   printf("\n");
+    
   return 0;
 }
