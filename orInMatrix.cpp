@@ -20,6 +20,15 @@ using namespace std;
 int n, m, a[105][105];
 bool tab[105][105];
 
+void clean(int a, int b)
+{
+  FOR(i, 1, m)
+    tab[a][i] = false;
+  FOR(i, 1, n)
+    tab[i][b] = false;
+}
+
+
 int main()
 {
   scanf("%d %d", &n, &m);
@@ -29,35 +38,26 @@ int main()
       tab[i][j] = true;
       scanf("%d", &a[i][j]);
     }
-    
   FOR(i, 1, n)
     FOR(j, 1, m)
       if(!a[i][j])
-      {
-	FOR(k, 1, n)
-	  tab[k][j] = false;
-	FOR(k, 1, m)
-	  tab[i][k] = false;
-      }
-      
-  bool bug = false;  
+	clean(i, j);
     
   FOR(i, 1, n)
     FOR(j, 1, m)
     {
       if(a[i][j])
       {
+	int bug = 0;
 	FOR(k, 1, m)
-	  if(tab[i][k])
-	    bug = true;
+	  bug = bug||tab[i][k];
 	FOR(k, 1, n)
-	  if(tab[k][j])
-	    bug = true;
+	  bug = bug||tab[k][j];
+	if(!bug)
+	  return printf("NO\n"), 0;
       }
     }
     
-  if(!bug)
-    return printf("NO\n"), 0;
   
   printf("YES\n");
   FOR(i, 1, n)
