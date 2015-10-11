@@ -19,34 +19,35 @@ using namespace std;
 #define PB push_back
 
 
-int p, q, l, r, cnt;
-bool first[1000005], second[1000005], vis[1000005];
+int p, q, l, r, cnt, a[60], b[60], c[60], d[60];
 
 int main()
 {
   scanf("%d %d %d %d", &p, &q, &l, &r);
   REP(i, p)
-  {
-    int a, b;
-    scanf("%d %d", &a, &b);
-    FOR(j, a, b-1)
-      first[j] = true;
-  }
+    scanf("%d %d", &a[i], &b[i]);
+    
   REP(i, q)
-  {
-    int a, b;
-    scanf("%d %d", &a, &b);
-    FOR(j, a, b-1)
-      second[j] = true;
-  }
+    scanf("%d %d", &c[i], &d[i]);
   
-  FOR(i, 0, 1000)
-    FOR(j, 0, 1000)
-	if(first[i] && second[j])
-	  vis[i-j] = vis[i-j-1] = true;
   FOR(i, l, r)
-    cnt += vis[i]|vis[i-1];
-  
+  {
+    bool r = false;
+    int j = 0, k = 0;
+    
+    while(!r && j < p && k < q)
+    {
+      if(b[j] < c[k]+i)
+	j++;
+      else if(d[k]+i < a[j])
+	k++;
+      else
+      {
+	r = 1, cnt++;
+	break;
+      }
+    }
+  }
   printf("%d\n", cnt);
     
   
