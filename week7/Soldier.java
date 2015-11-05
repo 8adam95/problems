@@ -24,7 +24,7 @@ public class Soldier
 
 	public double distance(Soldier soldier)
 	{
-		return (this.posX-soldier.posX)*(this.posX-soldier.posX) + (this.posY-soldier.posY)*(this.posY-soldier.posY);
+		return Math.sqrt((this.posX-soldier.posX)*(this.posX-soldier.posX) + (this.posY-soldier.posY)*(this.posY-soldier.posY));
 	}
 
 	//I use formula distance = speed*time to calculate time
@@ -33,13 +33,18 @@ public class Soldier
 	public double time(Soldier soldier)
 	{
 		double d = distance(soldier);
-		return Math.sqrt(d)/(this.speed);
+		return d/(this.speed);
+	}
 
+	public void setNewPosition(Soldier soldier)
+	{
+		this.posX = soldier.getX();
+		this.posY = soldier.getY();
 	}
 
 	public String toString()
 	{
-		return "The winner is " + name + "on the original position " + posX + " " +posY + "!";
+		return "The winner is " + name + "!";
 	}
 
 }

@@ -8,5 +8,10 @@ public class Arbalist extends Soldier
 		this.range = range;
 	}
 
+	public double getRange()
+	{
+		return range;
+	}
+
 
 }

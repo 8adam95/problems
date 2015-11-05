@@ -7,9 +7,9 @@ public class Battlefield
 		//declaration and initialization basic variables
 		//with information about each soldier.
 
-		double SpeedOfArbalist = 12.3;
-		double SpeedOfLancer = 4.3;
-		double SpeedOfCataphract = 5.9;
+		double speedOfArbalist = 12.3;
+		double speedOfLancer = 4.3;
+		double speedOfCataphract = 5.9;
 
 		double range = 10.0;
 
@@ -23,8 +23,9 @@ public class Battlefield
 		double minX = 0.0;
 		double minY = 0.0;
 
-		//number of battles
+		Soldier outOfGame = new Soldier("Loser", 0, -1.0, -1.0);
 
+		//number of battles
 		int battles = 3;
 
 		for(int i = 1; i <= battles; i++)
@@ -34,38 +35,72 @@ public class Battlefield
 			double randomValueX = minX + (maxX-minX)*rand.nextDouble();
 			double randomValueY = minY + (maxY-minY)*rand.nextDouble();
 
-			Arbalist arbalist = new Arbalist("Arbalist", SpeedOfArbalist, randomValueX, randomValueY, range);
+			//randomValueY = 10.0;
+			//randomValueX = 10.0;
 
-
-			randomValueX = minX + (maxX-minX)*rand.nextDouble();
-			randomValueY = minY + (maxY-minY)*rand.nextDouble();
-
-			Lancer lancer = new Lancer("Lancer", SpeedOfLancer, randomValueX, randomValueY);	
+			Arbalist arbalist = new Arbalist("Arbalist", speedOfArbalist, randomValueX, randomValueY, range);
 
 			randomValueX = minX + (maxX-minX)*rand.nextDouble();
 			randomValueY = minY + (maxY-minY)*rand.nextDouble();
 
-			Cataphract cataphract = new Cataphract("Cataphract", SpeedOfCataphract, randomValueX, randomValueY);	
+			//randomValueY = 30.0;
+			//randomValueX = 30.0;
 
-			//distances between 3 soldiers
+			Lancer lancer = new Lancer("Lancer", speedOfLancer, randomValueX, randomValueY);	
 
-			double distanceAL;
-			double distanceAC;
-			double distanceLC;
-			
+			randomValueX = minX + (maxX-minX)*rand.nextDouble();
+			randomValueY = minY + (maxY-minY)*rand.nextDouble();
 
-			distanceAL = arbalist.distance(lancer);
-			distanceAC = arbalist.distance(cataphract);
-			distanceLC = lancer.distance(cataphract);
+			//randomValueY = 70.0;
+			//randomValueX = 70.0;
 
-			System.out.println(distanceAL);
+			Cataphract cataphract = new Cataphract("Cataphract", speedOfCataphract, randomValueX, randomValueY);	
 
-			System.out.println(lancer.time(cataphract));
-			//I do not calculate sqrt, because it's imprecise
-			//that's why i will count square of the distances
-			//and then compare them
+			double distanceAL =  arbalist.distance(lancer);
 
-//speed*time = distance
+			//times for every pair (x,y) of different soldiers; (x,y) != (y,x)
+
+			double timeAL = arbalist.time(lancer);
+			double timeCA = cataphract.time(arbalist);
+			double timeLC = lancer.time(cataphract);
+
+			if(timeAL <= timeCA && timeAL <= timeLC)
+			{
+				if(arbalist.getRange() >= distanceAL)
+				{
+					System.out.println(arbalist);
+					lancer.setNewPosition(outOfGame);
+				}
+				//arbalist stay in the same position, lancer go to position (-1, -1)
+				else
+				{
+					if(timeCA <= timeLC)
+					{
+						System.out.println(cataphract);
+						cataphract.setNewPosition(arbalist);
+						arbalist.setNewPosition(outOfGame);
+					}
+					else
+					{
+						System.out.println(lancer);
+						lancer.setNewPosition(cataphract);
+					}
+				}
+			}
+			else if(timeCA <= timeAL && timeCA <= timeLC)
+			{
+				System.out.println(cataphract);
+				cataphract.setNewPosition(arbalist);
+				arbalist.setNewPosition(outOfGame);
+			}
+
+			else if(timeLC <= timeAL && timeLC <= timeCA)
+			{
+				System.out.println(lancer);
+				lancer.setNewPosition(cataphract);
+			}
+			else
+				System.out.println("Whoo, there is no winner!");
 		}
 	}
 }
