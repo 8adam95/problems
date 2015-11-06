@@ -35,15 +35,23 @@ public class Battlefield
 			double randomValueX = minX + (maxX-minX)*rand.nextDouble();
 			double randomValueY = minY + (maxY-minY)*rand.nextDouble();
 
+			// i used this comment to compare results with others
+
+			//randomValueY = 10.0;	//randomValueX = 10.0;
+
 			Arbalist arbalist = new Arbalist("Arbalist", speedOfArbalist, randomValueX, randomValueY, range);
 
 			randomValueX = minX + (maxX-minX)*rand.nextDouble();
 			randomValueY = minY + (maxY-minY)*rand.nextDouble();
 
+			//randomValueY = 30.0;	//randomValueX = 30.0;
+
 			Lancer lancer = new Lancer("Lancer", speedOfLancer, randomValueX, randomValueY);	
 
 			randomValueX = minX + (maxX-minX)*rand.nextDouble();
 			randomValueY = minY + (maxY-minY)*rand.nextDouble();
+
+			//randomValueY = 70.0;	//randomValueX = 70.0; 
 
 			Cataphract cataphract = new Cataphract("Cataphract", speedOfCataphract, randomValueX, randomValueY);	
 
