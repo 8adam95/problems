@@ -35,23 +35,15 @@ public class Battlefield
 			double randomValueX = minX + (maxX-minX)*rand.nextDouble();
 			double randomValueY = minY + (maxY-minY)*rand.nextDouble();
 
-			// i used this comment to compare results with others
-
-			//randomValueY = 10.0;	//randomValueX = 10.0;
-
 			Arbalist arbalist = new Arbalist("Arbalist", speedOfArbalist, randomValueX, randomValueY, range);
 
 			randomValueX = minX + (maxX-minX)*rand.nextDouble();
 			randomValueY = minY + (maxY-minY)*rand.nextDouble();
 
-			//randomValueY = 30.0;	//randomValueX = 30.0;
-
 			Lancer lancer = new Lancer("Lancer", speedOfLancer, randomValueX, randomValueY);	
 
 			randomValueX = minX + (maxX-minX)*rand.nextDouble();
 			randomValueY = minY + (maxY-minY)*rand.nextDouble();
-
-			//randomValueY = 70.0;	//randomValueX = 70.0; 
 
 			Cataphract cataphract = new Cataphract("Cataphract", speedOfCataphract, randomValueX, randomValueY);	
 
@@ -63,43 +55,28 @@ public class Battlefield
 			double timeCA = cataphract.time(arbalist);
 			double timeLC = lancer.time(cataphract);
 
-			if(timeAL <= timeCA && timeAL <= timeLC)
+			boolean visited = false;
+
+			if(timeAL <= timeCA && timeAL <= timeLC && arbalist.getRange() >= distanceAL)
 			{
-				if(arbalist.getRange() >= distanceAL)
-				{
-					System.out.println(arbalist);
-					lancer.setNewPosition(outOfGame);
-				}
+				System.out.println(arbalist);
+				lancer.setNewPosition(outOfGame);
+				visited = true;
 				//arbalist stay in the same position, lancer go to position (-1, -1)
-				else
-				{
-					if(timeCA <= timeLC)
-					{
-						System.out.println(cataphract);
-						cataphract.setNewPosition(arbalist);
-						arbalist.setNewPosition(outOfGame);
-					}
-					else
-					{
-						System.out.println(lancer);
-						lancer.setNewPosition(cataphract);
-					}
-				}
 			}
-			else if(timeCA <= timeAL && timeCA <= timeLC)
+			else if(timeCA <= timeLC && visited == false)
 			{
 				System.out.println(cataphract);
 				cataphract.setNewPosition(arbalist);
 				arbalist.setNewPosition(outOfGame);
+				visited = true;
 			}
 
-			else if(timeLC <= timeAL && timeLC <= timeCA)
+			else if(timeLC <= timeCA && visited == false)
 			{
 				System.out.println(lancer);
 				lancer.setNewPosition(cataphract);
 			}
-			else
-				System.out.println("Whoo, there is no winner!");
 		}
 	}
 }
