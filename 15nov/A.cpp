@@ -3,9 +3,9 @@
 #include<vector>
 #include<set>
 #include<map>
+#include<queue>
 #include<algorithm>
 #include<list>
-#include<cstring>
 using namespace std;
 
 #define REP(I, N) for(int I = 0; I < (N); I++)
@@ -17,62 +17,51 @@ using namespace std;
 #define MP make_pair
 #define PB push_back
 
-int n, x[6], y[6];
-pair<int, int> B[6];
+pair<int, int> C[10];
 
 int main()
 {
+  int n;
   scanf("%d", &n);
-  
-  FOR(i, 1, n)
+
+  REP(i, n)
   {
-    scanf("%d %d", &x[i], &y[i]);
-    B[i] = MP(x[i], y[i]);
+    int a, b;
+    scanf("%d %d", &a, &b);
+    C[i] = MP(a,b);
   }
-    
+  
   if(n == 1)
     return printf("-1\n"), 0;
   
   if(n == 2)
   {
-    if(x[1] != x[2] && y[1] != y[2])
-      return printf("%d\n", abs(x[2]-x[1])*abs(y[2]-y[1])), 0;
-    
-    return printf("-1\n"), 0;  
-  }
-  
-  sort(B+1, B+n+1);
-  
-  
-  if(n == 3)
-  {
-    if(x[1] == x[2])
-    {
-      if(y[3] == y[1])
-	return printf("%d\n", abs(x[3]-x[1])*abs(y[3]-y[2])), 0;
-      if(y[3] == y[2])
-	return printf("%d\n", abs(x[3]-x[1])*abs(y[3]-y[1])), 0;
+    if(C[0].F == C[1].F || C[0].S == C[1].S)
       return printf("-1\n"), 0;
-    }
-    if(x[2] == x[3])
-    {
-      if(y[3] == y[1])
-	return printf("%d\n", abs(x[2]-x[1])*abs(y[3]-y[2])), 0;
-      if(y[2] == y[1])
-	return printf("%d\n", abs(x[2]-x[1])*abs(y[3]-y[1])), 0;
-      return printf("-1\n"), 0;
-    }
-    return printf("-1\n"), 0;
+    return printf("%d\n", abs(C[1].F-C[0].F)*abs(C[1].S-C[0].S)), 0; 
   }
   
-  if(n == 4)
-  {
-    if(x[1] == x[2] && y[3] == y[1] && y[4] == y[2] && x[3] == x[4])
-      return printf("%d\n", abs(x[3]-x[1])*abs(y[4]-y[3])), 0;
-    return printf("-1\n"), 0;
-  }
-  return printf("-1\n"), 0;
-    
+  int dx = 0, dy = 0;
   
+  REP(i, n)
+    for(int j = i+1; j < n; j++)
+      if(C[i].F != C[j].F)
+      {
+	dx = abs(C[i].F-C[j].F);
+	i = j = n;
+	break;
+      }
+
+  REP(i, n)
+    for(int j = i+1; j < n; j++)
+      if(C[i].S != C[j].S)
+      {
+	dy = abs(C[i].S-C[j].S);
+	i = j = n;
+	break;
+      }
+      
+   return printf("%d\n", dx*dy), 0;
+      
   return 0;
-} 
+}
