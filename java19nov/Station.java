@@ -11,7 +11,14 @@ public class Station
 	public String toString()
 	{
 		return this.name;
-	}	
+	}
+
+	@Override
+	public boolean equals(Object object)
+	{
+		Station otherStation = (Station) object;
+		return this.name.equals(otherStation.name);
+	}
 
 
 }
