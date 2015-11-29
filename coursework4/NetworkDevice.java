@@ -6,6 +6,7 @@ public class NetworkDevice
 	public NetworkDevice(String address)
 	{
 		this.address = address;
+		this.curChannel = -1;
 	}
 
 	public Channel currentChannel()
@@ -17,10 +18,12 @@ public class NetworkDevice
 	{
 		//removing device from old channel
 		Channel oldChannel = currentChannel();
-		oldChannel.removeDevice(); 	//tutaj trzeba coś wpisać między ()
+
+		//I check whether it's in some channel or not
+		oldChannel.removeDevice(address);
 
 		//adding device to a new channel
-		channel.addDevice();		//tutaj to samo
+		channel.addDevice(address);		
 		this.curChannel = channel;
 	}
 }
