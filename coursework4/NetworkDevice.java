@@ -1,29 +1,39 @@
 public class NetworkDevice
 {
+	private String name;
 	private String address;
 	private Channel curChannel;
 
-	public NetworkDevice(String address)
+	//Channel firstUse = new Channel(-1);
+
+	public NetworkDevice(String aName, String address, Channel channel)
 	{
+		this.name = aName;
 		this.address = address;
-		this.curChannel = -1;
+		this.curChannel = channel;
 	}
+
+//	public NetworkDevice(String aName, String address, Channel channel)
+//	{
+//		this.name = aName;
+//		this.address = address;
+//		this.curChannel = channel;
+//	}
 
 	public Channel currentChannel()
 	{
 		return curChannel;
 	}
 
+	public String toString()
+	{
+		return name + " " + address + " " + curChannel;
+	}
+
+	//I give Network device a new channel instead of old one
 	public void joinAChannel(Channel channel)
 	{
-		//removing device from old channel
-		Channel oldChannel = currentChannel();
-
-		//I check whether it's in some channel or not
-		oldChannel.removeDevice(address);
-
-		//adding device to a new channel
-		channel.addDevice(address);		
-		this.curChannel = channel;
+		curChannel = channel;
 	}
-}
+	
+}//Hano

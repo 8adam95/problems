@@ -2,17 +2,23 @@ import java.util.*;
 
 public class Client extends NetworkDevice
 {
-	private String address;
-	private ArrayList<AccessPoint> connectedTo = new ArrayList<AccessPoint>();
+	private AccessPoint connectedTo;
 
-	public Client(String address)
+	public Client(String name, String address, Channel channel)
 	{
-		super(address);
+		super(name, address, channel);
 	}
 
-	String toString()
+	//connecting client to an access point
+	public void connectToAccessPoint(AccessPoint accessPoint)
 	{
-		return "Client with address " + address + " is currently connected to " + connectedTo;
+		connectedTo = accessPoint;
+	}
+
+
+	public AccessPoint currentlyConnectedTo()
+	{
+		return connectedTo;
 	}
 
 

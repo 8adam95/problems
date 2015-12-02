@@ -2,17 +2,23 @@ import java.util.*;
 
 public class AccessPoint extends NetworkDevice
 {
-	private String address;
 	private ArrayList<Client> authorisedToUse =  new ArrayList<Client>();
 
-	public AccessPoint(String address)
+	public AccessPoint(String name, String address, Channel channel)
 	{
-		super(address);
+		super(name, address, channel);
 	}
 
 
-	public String toString()
+
+	//method which add client to the list of authoriced clients
+	public void authorisedClientToUse(Client client)
 	{
-		return "AccessPoint of address " + address + " can be accessed by " + authorisedToUse;
+		authorisedToUse.add(client);
+	}
+
+	public ArrayList<Client> listOfAuthorised()
+	{
+		return authorisedToUse;
 	}
 }

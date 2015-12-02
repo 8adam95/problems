@@ -1,23 +1,26 @@
-public Channel
+import java.util.*;
+
+public class Channel
 {
 	private int number;
+
+	//traffic = record of the Packets currently in the channel
 	private ArrayList<Packet> traffic = new ArrayList<Packet>();
-	private ArrayList<NetworkDevice> devicesInChannel = new ArrayList<NetworkDevice>();
 
-	public Channel(int number)
+	public Channel(int aNumber)
 	{
-		this.number = number;
+		this.number = aNumber;
 	}
 
-	public void addDevice(String address)
+	public String toString()
 	{
-		devicesInChannel.add(address);
+		return "Channel: " + number;
 	}
 
-	public void removeDevice(String address)
+
+	public void addPacketToChannel(Packet packet)
 	{
-		if(devicesInChannel.contains(address))
-			devicesInChannel.remove(address);
+			traffic.add(packet);
 	}
 
 }
