@@ -6,35 +6,46 @@ public class Network
 	private ArrayList<Channel> channelsInNetwork = new ArrayList<Channel>();
 	private HashMap<Channel, ArrayList<NetworkDevice>> devicesInChannel = new HashMap<Channel, ArrayList<NetworkDevice>>();
 
+	Channel outOfScope = new Channel(-1);
+
 	public Network(String aName)
 	{
 		this.name = aName;
 	}
 
-	//firstly I remove device from a previous channel
-	public void removeDeviceFromChannel(NetworkDevice networkDevice)
+
+	public Channel inWhichChannel(NetworkDevice networkDevice)
 	{
-		boolean visited = false;
+
 		for(Channel key : devicesInChannel.keySet())
 		{
 			ArrayList<NetworkDevice> tempArray = new ArrayList<NetworkDevice>();
 			tempArray = devicesInChannel.get(key);
 
 			for(int i = 0; i < tempArray.size(); i++)
-			{
+				if(tempArray.get(i) == networkDevice)
+					return key;
+		}
+
+		return outOfScope;
+	}
+
+	//firstly I remove device from a previous channel
+	public void removeDeviceFromChannel(NetworkDevice networkDevice)
+	{
+		Channel c = inWhichChannel(networkDevice);
+
+		if(c != outOfScope)
+		{
+			ArrayList<NetworkDevice> tempArray = new ArrayList<NetworkDevice>();
+			tempArray = devicesInChannel.get(c);
+			for(int i = 0; i < tempArray.size(); i++)
 				if(tempArray.get(i) == networkDevice)
 				{
 					tempArray.remove(i);
-					visited = true;
 					break;
-
-					//I know that there is only one channel in which is this device
-
-				}
-			}
-			devicesInChannel.put(key, tempArray);
-			if(visited)
-				break;
+				}	
+			devicesInChannel.put(c, tempArray);
 		}
 	}
 

@@ -35,6 +35,11 @@ public class Main{
 		network.addDeviceToNetwork(tel2, channel);
 		network.addDeviceToNetwork(tel23, channel2);
 
+		System.out.println(network.inWhichChannel(tel));
+		System.out.println(network.inWhichChannel(tel2));
+
+		System.out.println("------------------------------------------------------------------------------");
+
 		System.out.println(network.listOfChannelsInNetwork());
 		System.out.println(network.listOfDevicesInChannel(channel));
 		System.out.println(network.listOfDevicesInChannel(channel2));

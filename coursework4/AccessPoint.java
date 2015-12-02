@@ -9,8 +9,6 @@ public class AccessPoint extends NetworkDevice
 		super(name, address);
 	}
 
-
-
 	//method which add client to the list of authoriced clients
 	public void authorisedClientToUse(Client client)
 	{

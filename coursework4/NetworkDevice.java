@@ -9,6 +9,11 @@ public class NetworkDevice
 		this.address = address;
 	}
 
+	public String getAddress()
+	{
+		return address;
+	}
+
 	public String toString()
 	{
 		return name + " " + address;
