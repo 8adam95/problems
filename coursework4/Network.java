@@ -11,15 +11,47 @@ public class Network
 		this.name = aName;
 	}
 
+	//firstly I remove device from a previous channel
+	public void removeDeviceFromChannel(NetworkDevice networkDevice)
+	{
+		boolean visited = false;
+		for(Channel key : devicesInChannel.keySet())
+		{
+			ArrayList<NetworkDevice> tempArray = new ArrayList<NetworkDevice>();
+			tempArray = devicesInChannel.get(key);
 
+			for(int i = 0; i < tempArray.size(); i++)
+			{
+				if(tempArray.get(i) == networkDevice)
+				{
+					tempArray.remove(i);
+					visited = true;
+					break;
+
+					//I know that there is only one channel in which is this device
+
+				}
+			}
+			devicesInChannel.put(key, tempArray);
+			if(visited)
+				break;
+		}
+	}
+
+	
 	public void addDeviceToNetwork(NetworkDevice networkDevice, Channel channel)
 	{
+
+		removeDeviceFromChannel(networkDevice);
 		ArrayList<NetworkDevice> networkDevicesInChannel = new ArrayList<NetworkDevice>();
 
 
 		//I change channel of the device to be the same as channel to which I added this device
 		//if not, there would be a possibility to have a device with channel1 in channel 2 
-		networkDevice.joinAChannel(channel);	
+		
+
+		//For security I check whether a channel is in a list
+		addChannelToNetwork(channel);
 
 		if(devicesInChannel.containsKey(channel))
 			networkDevicesInChannel = devicesInChannel.get(channel);

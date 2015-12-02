@@ -4,9 +4,9 @@ public class Client extends NetworkDevice
 {
 	private AccessPoint connectedTo;
 
-	public Client(String name, String address, Channel channel)
+	public Client(String name, String address)
 	{
-		super(name, address, channel);
+		super(name, address);
 	}
 
 	//connecting client to an access point

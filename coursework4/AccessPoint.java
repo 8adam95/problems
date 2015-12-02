@@ -4,9 +4,9 @@ public class AccessPoint extends NetworkDevice
 {
 	private ArrayList<Client> authorisedToUse =  new ArrayList<Client>();
 
-	public AccessPoint(String name, String address, Channel channel)
+	public AccessPoint(String name, String address)
 	{
-		super(name, address, channel);
+		super(name, address);
 	}
 
 
