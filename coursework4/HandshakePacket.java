@@ -8,6 +8,15 @@ public class HandshakePacket extends Packet
 		this.key = key;
 	}
 
+	public String returnKey()
+	{
+		return key;
+	}
+
+	public String toString()
+	{
+		return key;
+	}
 
 
 }

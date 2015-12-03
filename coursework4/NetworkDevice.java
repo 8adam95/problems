@@ -2,6 +2,7 @@ public class NetworkDevice
 {
 	private String name;
 	private String address;
+	private String key;
 
 	public NetworkDevice(String aName, String address)
 	{
@@ -12,6 +13,16 @@ public class NetworkDevice
 	public String getAddress()
 	{
 		return address;
+	}
+
+	public void setKey(String key)
+	{
+		this.key = key;
+	}
+
+	public String getKey()
+	{
+		return key;
 	}
 
 	public String toString()

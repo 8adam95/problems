@@ -9,4 +9,15 @@ public class Packet
 		this.sourceAddress = source;
 	}
 
+	public String getDestinationAddress()
+	{
+		return destinationAddress;
+	}
+
+	public String getSourceAddress()
+	{
+		return sourceAddress;
+	}
+
+	
 }

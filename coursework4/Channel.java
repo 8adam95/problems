@@ -18,9 +18,15 @@ public class Channel
 	}
 
 
+
 	public void addPacketToChannel(Packet packet)
 	{
-			traffic.add(packet);
+		traffic.add(packet);
+	}
+
+	public ArrayList<Packet> trafficInChannel()
+	{
+		return traffic;
 	}
 
 }

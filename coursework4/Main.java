@@ -17,6 +17,11 @@ public class Main{
 		Client tel23 = new Client("23phonasde1a", "72123:123:343");
 
 
+		router.setKey("1234567");
+		tel.setKey("1234567");
+		tel2.setKey("12");
+		tel23.setKey("09534");
+
 		router.authorisedClientToUse(tel);
 		router.authorisedClientToUse(tel2);
 		router.authorisedClientToUse(tel23);
@@ -28,6 +33,7 @@ public class Main{
 		Packet packet = new Packet("723", "73:23:123a:23");
 
 		channel.addPacketToChannel(packet);
+		channel2.addPacketToChannel(packet);
 		
 
 		network.addDeviceToNetwork(router, channel);
@@ -44,6 +50,13 @@ public class Main{
 		System.out.println(network.listOfDevicesInChannel(channel));
 		System.out.println(network.listOfDevicesInChannel(channel2));
 
+		System.out.println("------------------------------------------------------------------------------");
+		System.out.println("------------------------------------------------------------------------------");
+
+		Handshake handshake = new Handshake(network, tel, router, "1234567");
+		Handshake handshake2 = new Handshake(network, tel, router, "1111");
+
+		System.out.println(channel.trafficInChannel());
 
 	}		
 }

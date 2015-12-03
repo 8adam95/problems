@@ -2,6 +2,7 @@ import java.util.*;
 
 public class AccessPoint extends NetworkDevice
 {
+	private String key;
 	private ArrayList<Client> authorisedToUse =  new ArrayList<Client>();
 
 	public AccessPoint(String name, String address)
