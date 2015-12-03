@@ -13,7 +13,9 @@ public class AccessPoint extends NetworkDevice
 	//method which add client to the list of authoriced clients
 	public void authorisedClientToUse(Client client)
 	{
-		authorisedToUse.add(client);
+		//I don't want to have duplicates, so I check whether client is already in an authorisedToUse list
+		if(!authorisedToUse.contains(client))
+			authorisedToUse.add(client);
 	}
 
 	public ArrayList<Client> listOfAuthorised()

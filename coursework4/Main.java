@@ -3,6 +3,9 @@ public class Main{
 	public static void main(String[] args)
 	{
 
+		System.out.println("***************************************");
+		System.out.println("***************************************");
+
 		Network network = new Network("first network");
 
 		Channel channel = new Channel(1);
@@ -31,9 +34,9 @@ public class Main{
 		tel23.connectToAccessPoint(router);
 
 		Packet packet = new Packet("723", "73:23:123a:23");
-
+		Packet packet2 = new Packet("123", "3453:123:234");
 		channel.addPacketToChannel(packet);
-		channel2.addPacketToChannel(packet);
+		channel2.addPacketToChannel(packet2);
 		
 
 		network.addDeviceToNetwork(router, channel);
@@ -41,14 +44,15 @@ public class Main{
 		network.addDeviceToNetwork(tel2, channel);
 		network.addDeviceToNetwork(tel23, channel2);
 
-		System.out.println(network.inWhichChannel(tel));
-		System.out.println(network.inWhichChannel(tel2));
+		System.out.println("In which channel is tel = " + network.inWhichChannel(tel));
+		System.out.println("In which channel is tel2 ="  + network.inWhichChannel(tel2));
 
 		System.out.println("------------------------------------------------------------------------------");
 
-		System.out.println(network.listOfChannelsInNetwork());
-		System.out.println(network.listOfDevicesInChannel(channel));
-		System.out.println(network.listOfDevicesInChannel(channel2));
+		System.out.println("List of Channels in Network = " + network.listOfChannelsInNetwork());
+		System.out.println("***************************************");
+		System.out.println("List of devices in channel = " + network.listOfDevicesInChannel(channel));
+		System.out.println("List of devices in channel2 = " + network.listOfDevicesInChannel(channel2));
 
 		System.out.println("------------------------------------------------------------------------------");
 		System.out.println("------------------------------------------------------------------------------");
@@ -56,7 +60,8 @@ public class Main{
 		Handshake handshake = new Handshake(network, tel, router, "1234567");
 		Handshake handshake2 = new Handshake(network, tel, router, "1111");
 
-		System.out.println(channel.trafficInChannel());
+		System.out.println("Traffic in channel = " + channel.trafficInChannel());
+		System.out.println("Traffic in channel2 = " + channel2.trafficInChannel());
 
 	}		
 }
