@@ -1,7 +1,7 @@
 public class Packet
 {
-	private String destinationAddress;
-	private String sourceAddress;
+	protected String destinationAddress;
+	protected String sourceAddress;
 	
 	public Packet(String destination, String source)
 	{
@@ -19,5 +19,4 @@ public class Packet
 		return sourceAddress;
 	}
 
-	
 }

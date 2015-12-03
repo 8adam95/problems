@@ -52,14 +52,8 @@ public class Network
 	
 	public void addDeviceToNetwork(NetworkDevice networkDevice, Channel channel)
 	{
-
 		removeDeviceFromChannel(networkDevice);
 		ArrayList<NetworkDevice> networkDevicesInChannel = new ArrayList<NetworkDevice>();
-
-
-		//I change channel of the device to be the same as channel to which I added this device
-		//if not, there would be a possibility to have a device with channel1 in channel 2 
-		
 
 		//For security I check whether a channel is in a list
 		addChannelToNetwork(channel);
@@ -70,7 +64,6 @@ public class Network
 		networkDevicesInChannel.add(networkDevice);
 
 		devicesInChannel.put(channel, networkDevicesInChannel);
-
 	}
 
 	public void addChannelToNetwork(Channel channel)

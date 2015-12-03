@@ -17,8 +17,6 @@ public class Channel
 		return "Channel: " + number;
 	}
 
-
-
 	public void addPacketToChannel(Packet packet)
 	{
 		traffic.add(packet);

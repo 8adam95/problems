@@ -8,41 +8,58 @@ public class Handshake
 	private Channel outOfRange = new Channel(-2);
 
 
-	//constructor, in which I connect client and accessPoint
+	//constructor, in which I temporary connect a client and an accessPoint
 	//then I'm trying to make a handshake
 	public Handshake(Network network, Client client, AccessPoint accessPoint, String key)
 	{
 		join(network, client, accessPoint, key);
-		boolean succees = makeHandshake(network, client, accessPoint);
-
+		boolean successToAccess = makeHandshakeToAccessPoint(network, client, accessPoint);
+		boolean successToClient = makeHandshakeToClient(network, client, accessPoint);
 		//revoke connection
-		if(!succees)
+		if(!successToClient || !successToAccess)
 		{
 			disconnect(network, client, accessPoint);
 		}
-
+		else
+			client.connectToAccessPoint(accessPoint);
 	}
 
-
-	//
-	public boolean makeHandshake(Network network, Client client, AccessPoint accessPoint)
+	//making handshake with client
+	public boolean makeHandshakeToClient(Network network, Client client, AccessPoint accessPoint)
 	{
 		ArrayList<HandshakePacket> handshakePacketsInChannel = new ArrayList<HandshakePacket>();
-		ArrayList<Packet> trafficInChannel = new ArrayList<Packet>();
-
-		trafficInChannel = getChannelOfAccessPoint().trafficInChannel();
-
-
+		ArrayList<Packet> arrayTrafficInChannel = new ArrayList<Packet>();
 		boolean suc = false;
 
-		//firstly I take every HandshakePacket in this channel for consideration
-		for(int i = 0; i < trafficInChannel.size(); i++)
-			if(trafficInChannel.get(i) instanceof HandshakePacket)
-			{
-				System.out.println(trafficInChannel.get(i));
-				handshakePacketsInChannel.add((HandshakePacket)trafficInChannel.get(i));
-			}
+		arrayTrafficInChannel = getChannelOfAccessPoint(network, accessPoint).trafficInChannel();
 
+		for(int i = 0; i < arrayTrafficInChannel.size(); i++)
+			if(arrayTrafficInChannel.get(i) instanceof HandshakePacket)
+				handshakePacketsInChannel.add((HandshakePacket)arrayTrafficInChannel.get(i));
+
+		for(int i = 0; i < handshakePacketsInChannel.size(); i++)
+			if(handshakePacketsInChannel.get(i).getDestinationAddress() == client.getAddress())
+				if(compareKeys(client, handshakePacketsInChannel.get(i)))
+					suc = true;
+
+		return suc;
+	}
+
+	//making handshake with accessPoint
+	public boolean makeHandshakeToAccessPoint(Network network, Client client, AccessPoint accessPoint)
+	{
+		ArrayList<HandshakePacket> handshakePacketsInChannel = new ArrayList<HandshakePacket>();
+		ArrayList<Packet> arrayTrafficInChannel = new ArrayList<Packet>();
+		boolean suc = false;
+
+		arrayTrafficInChannel = getChannelOfAccessPoint(network, accessPoint).trafficInChannel();
+
+		System.out.println(arrayTrafficInChannel);
+
+		//firstly I take every HandshakePacket in this channel for consideration
+		for(int i = 0; i < arrayTrafficInChannel.size(); i++)
+			if(arrayTrafficInChannel.get(i) instanceof HandshakePacket)
+				handshakePacketsInChannel.add((HandshakePacket)arrayTrafficInChannel.get(i));
 
 		//then I check whether destination address is equal address of the accessPoint
 		for(int i = 0; i < handshakePacketsInChannel.size(); i++)
@@ -54,10 +71,13 @@ public class Handshake
 				{
 					accessPoint.authorisedClientToUse(client);
 
+					HandshakePacket hPacket = new HandshakePacket(client.getAddress(), accessPoint.getAddress(), key);
+
+					addHandshakePacket(getChannelOfAccessPoint(network, accessPoint), hPacket);
+					
 					suc = true;
 				}
 			}
-
 		return suc;
 	}
 
@@ -74,18 +94,17 @@ public class Handshake
 	}
 
 
-
 	//initiate connection between client and accessPoint in the network
 	//connect client to the same channel as accessPoint, 
 	//add new handshake packet to the channel
 	public void join(Network network, Client client, AccessPoint accessPoint, String key)
 	{
-		channelOfAccessPoint = network.inWhichChannel(accessPoint);
+		this.key = key;
+		channelOfAccessPoint = getChannelOfAccessPoint(network, accessPoint);
 
 		network.addDeviceToNetwork(client, channelOfAccessPoint);
 		
 		HandshakePacket handshakePacket = new HandshakePacket(accessPoint.getAddress(), client.getAddress(), key);
-
 		addHandshakePacket(channelOfAccessPoint, handshakePacket);
 	}
 
@@ -97,9 +116,9 @@ public class Handshake
 	}
 
 	//return channel in which is accessPoint
-	public Channel getChannelOfAccessPoint()
+	public Channel getChannelOfAccessPoint(Network network, AccessPoint accessPoint)
 	{
-		return channelOfAccessPoint;
+		return network.inWhichChannel(accessPoint);
 	}
 
 }
