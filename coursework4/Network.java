@@ -16,7 +16,6 @@ public class Network
 
 	public Channel inWhichChannel(NetworkDevice networkDevice)
 	{
-
 		for(Channel key : devicesInChannel.keySet())
 		{
 			ArrayList<NetworkDevice> tempArray = new ArrayList<NetworkDevice>();
@@ -79,6 +78,12 @@ public class Network
 		return channelsInNetwork;
 	}
 
+	public void clearChannels()
+	{
+		for(int i = 0; i < channelsInNetwork.size(); i++)
+			channelsInNetwork.get(i).clearr();
+	}
+
 	public ArrayList<NetworkDevice> listOfDevicesInChannel(Channel channel)
 	{
 		if(devicesInChannel.containsKey(channel))
@@ -87,5 +92,52 @@ public class Network
 		return bum;
 	}
 
+	//
+	public void networkActivity(Channel channel, Client client, AccessPoint accessPoint)
+	{
+		System.out.println("Activity burst:");
+
+		if(accessPoint != null && accessPoint.isAuthorised(client))
+		{
+			Packet packet = new Packet(accessPoint.getAddress() ,client.getAddress());
+			channel.addPacketToChannel(packet);
+
+			//Get the packet with destination address equals address of the accessPoint
+			//it there is no, it returns packet with values (-1, -1)
+			Packet toAccess = channel.packetToAccessPoint(accessPoint);
+			if(toAccess.getDestinationAddress().equals(accessPoint.getAddress()))
+			{
+				//if a client is authorised to use this access point
+				if(accessPoint.isAuthorised(client))
+				{
+					//returning packet is added only if every condition is met
+					Packet packet2 = new Packet(toAccess.getSourceAddress(), accessPoint.getAddress());
+					channel.addPacketToChannel(packet2);
+				}
+			}
+		}
+		
+		goSleep(100);
+	}
+
+	public void goSleep(int n)
+	{
+		try
+		{
+			Thread.sleep(n);
+		}
+		catch (InterruptedException e)
+		{
+			System.out.println(e);
+		}
+	}
+
+	//this method check conditions which are neccessary to send packets
+	//between client and access Point
+	//client must be connected to the accessPoint and client must be authorised to send packet to the accessPoint
+	public boolean goodPair(Client client, AccessPoint accessPoint)
+	{
+		return client.currentlyConnectedTo() == accessPoint && accessPoint.isAuthorised(client);
+	}
 
 }

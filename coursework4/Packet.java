@@ -19,4 +19,13 @@ public class Packet
 		return sourceAddress;
 	}
 
+	public String toString()
+	{
+		return "Packet (Source: " + sourceAddress + " Destination: " + destinationAddress + ")";
+	}
+
+	public String packetAdded()
+	{
+		return "Packet added to channel ";
+	}
 }

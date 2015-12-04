@@ -18,6 +18,7 @@ public class NetworkDevice
 	public void setKey(String key)
 	{
 		this.key = key;
+		System.out.println("Stored key: " + key);
 	}
 
 	public String getKey()

@@ -8,6 +8,7 @@ public class AccessPoint extends NetworkDevice
 	public AccessPoint(String name, String address)
 	{
 		super(name, address);
+		System.out.print("Creating AccessPoint with address " + address + ". ");
 	}
 
 	//method which add client to the list of authoriced clients
@@ -21,5 +22,18 @@ public class AccessPoint extends NetworkDevice
 	public ArrayList<Client> listOfAuthorised()
 	{
 		return authorisedToUse;
+	}
+
+	public boolean isAuthorised(Client client)
+	{
+		for(int i = 0; i < authorisedToUse.size(); i++)
+			if(authorisedToUse.get(i) == client)
+				return true;
+		return false;
+	}
+
+	public String toString()
+	{
+		return "AccessPoint@"+this.getAddress();
 	}
 }

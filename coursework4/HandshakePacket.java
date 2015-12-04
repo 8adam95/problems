@@ -13,10 +13,10 @@ public class HandshakePacket extends Packet
 		return key;
 	}
 
+
 	public String toString()
 	{
-		return key;
+		return "HandshakePacket (Source: " + sourceAddress + " Destination: " + destinationAddress + ")";
 	}
-
-
 }
+

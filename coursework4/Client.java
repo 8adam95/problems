@@ -7,6 +7,7 @@ public class Client extends NetworkDevice
 	public Client(String name, String address)
 	{
 		super(name, address);
+		System.out.print("Creating Client with address " + address + ". ");
 	}
 
 	//connecting client to an access point
@@ -15,11 +16,14 @@ public class Client extends NetworkDevice
 		connectedTo = accessPoint;
 	}
 
-
 	public AccessPoint currentlyConnectedTo()
 	{
 		return connectedTo;
 	}
 
+	public String toString()
+	{
+		return "Client@"+this.getAddress();
+	}
 
 }
