@@ -1,8 +1,11 @@
+import java.util.*;
+
 public class NetworkDevice
 {
 	private String name;
 	private String address;
 	private String key;
+	private ArrayList<AccessPoint> history = new ArrayList<AccessPoint>();
 
 	public NetworkDevice(String aName, String address)
 	{

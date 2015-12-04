@@ -7,7 +7,6 @@ public class Handshake
 	private Channel outOfRange = new Channel(-2);
 	private boolean succHandshake = false;
 
-
 	//constructor, in which I temporary connect a client and an accessPoint
 	//then I'm trying to make a handshake
 	public Handshake(Network network, Client client, AccessPoint accessPoint, String key)
@@ -24,11 +23,14 @@ public class Handshake
 		else
 		{
 			System.out.println("Handshake success " + client + " connects to " + accessPoint);
+			client.addToHistory(accessPoint);
 			client.connectToAccessPoint(accessPoint);
 			this.succHandshake = true;
 		}
 	}
 
+
+	//method which says if the handshake succeed
 	public boolean handshakeSucceed()
 	{
 		return succHandshake;
@@ -42,7 +44,7 @@ public class Handshake
 
 		arrayTrafficInChannel = getChannelOfAccessPoint(network, accessPoint).trafficInChannel();
 
-		//firstly I take every HandshakePacket in this channel for consideration
+		//firstly I consider every HandshakePacket in this channel
 		for(int i = 0; i < arrayTrafficInChannel.size(); i++)
 			if(arrayTrafficInChannel.get(i) instanceof HandshakePacket)
 				handshakePacketsInChannel.add((HandshakePacket)arrayTrafficInChannel.get(i));
@@ -54,12 +56,17 @@ public class Handshake
 				//now I need to compare keys of packet and accessPoint
 				if(compareKeys(accessPoint, handshakePacketsInChannel.get(i)))
 				{
+					//then client is authorised to connect with this access point
 					accessPoint.authorisedClientToUse(client);
 			
+
+					//i get rid of used packet
 					getChannelOfAccessPoint(network, accessPoint).removePacketFromChannel(handshakePacketsInChannel.get(i));
 
+					//create new packet to client from access point
 					HandshakePacket hPacket = new HandshakePacket(client.getAddress(), accessPoint.getAddress(), key);
 
+					//and then send this packet into a chennel of an access point
 					addHandshakePacket(getChannelOfAccessPoint(network, accessPoint), hPacket);
 
 					return true;

@@ -12,16 +12,21 @@ public class Channel
 		this.number = aNumber;
 	}
 
+
 	public String toString()
 	{
 		return "Channel: " + number;
 	}
 
+
+	//method which clear traffic in this channel
 	public void clearr()
 	{
 		traffic.clear();
 	}
 
+
+	//method which add a packet to the channel
 	public void addPacketToChannel(Packet packet)
 	{
 		//I don't want to have duplicates in a traffic
@@ -29,12 +34,16 @@ public class Channel
 		traffic.add(packet);
 	}
 
+
+	//method which remove the packet from the channel
 	public void removePacketFromChannel(Packet packet)
 	{
 		if(traffic.contains(packet))
 			traffic.remove(packet);
 	}
 
+
+	//method which return traffic in channel
 	public ArrayList<Packet> trafficInChannel()
 	{
 		return traffic;

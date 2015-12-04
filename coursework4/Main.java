@@ -4,8 +4,12 @@ public class Main{
 	{
 		System.out.println();
 
+
+		//firstly I need to create a network
 		Network network = new Network("Network");
 
+
+		//then I can create channels and add them to created network
 		Channel channel = new Channel(1);
 		Channel channel2 = new Channel(2);
 
@@ -13,27 +17,48 @@ public class Main{
 		network.addChannelToNetwork(channel2);
 
 
+
+		//create acceess point with name and address.
+		//Then I am able to set key to this device and finally add it to the network in some channel
 		AccessPoint router = new AccessPoint("router", "12:f9:37:d7:de:11");
 		router.setKey("1234567");
 
 		network.addDeviceToNetwork(router, channel);
 
+
+		//the same as access point, but with client and without adding it to the channel (I need to pass a hanshake procedure) 
 		Client tel = new Client("phone1", "f7:88:g9:hi:j1:22");
 		tel.setKey("1234567");
 
+
+		//making handshake
+		//Hanshake is a class which create an object Handshake
 		Handshake handshake = new Handshake(network, tel, router, "1234567");		
 		Packet packet1 = new Packet("f7:88:g9:hi:j1:22", "12:f9:37:d7:de:11");
 		Packet packet2 = new Packet("12:f9:37:d7:de:11","f7:88:g9:hi:j1:22");
 
+		//how many normal packets I want to send
 		int n = 5;
 
+		//creating new hacker
+		Hacker romero = new Hacker("Romero");
+		romero.observe(tel, router);
+
+		//after initiated handshake
+
+		//cleaning channels in Network network
 		network.clearChannels();
 
 		while(n > 0)
 		{
 			n -= 1;
-			network.networkActivity(channel, tel, tel.currentlyConnectedTo());
+			network.clearChannels();
+			network.networkActivity(channel, tel, tel.currentlyConnectedTo(), network);
+
+			romero.getAllTheTraffic(network);
 		}
+
+
 
 		/*
 		channel.addPacketToChannel(packet);
@@ -81,4 +106,4 @@ public class Main{
 		System.out.println();
 
 	}		
-}
+} 

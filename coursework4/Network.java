@@ -80,7 +80,7 @@ public class Network
 
 	public void clearChannels()
 	{
-		for(int i = 0; i < channelsInNetwork.size(); i++)
+		for(int i = 0; i < listOfChannelsInNetwork().size(); i++)
 			channelsInNetwork.get(i).clearr();
 	}
 
@@ -93,34 +93,62 @@ public class Network
 	}
 
 	//
-	public void networkActivity(Channel channel, Client client, AccessPoint accessPoint)
+	public void networkActivity(Channel channel, Client client, AccessPoint accessPoint, Network network)
 	{
 		System.out.println("Activity burst:");
 
 		if(accessPoint != null && accessPoint.isAuthorised(client))
 		{
-			Packet packet = new Packet(accessPoint.getAddress() ,client.getAddress());
-			channel.addPacketToChannel(packet);
+			//I check whether client will communicate or disconnect
+			boolean communicate = client.ableToCommunicate();
 
-			//Get the packet with destination address equals address of the accessPoint
-			//it there is no, it returns packet with values (-1, -1)
-			Packet toAccess = channel.packetToAccessPoint(accessPoint);
-			if(toAccess.getDestinationAddress().equals(accessPoint.getAddress()))
+			if(communicate)
 			{
-				//if a client is authorised to use this access point
-				if(accessPoint.isAuthorised(client))
+				Packet packet = new Packet(accessPoint.getAddress() ,client.getAddress());
+				channel.addPacketToChannel(packet);
+
+				//Get the packet with destination address equals address of the accessPoint
+				//it there is no, it returns packet with values (-1, -1)
+				Packet toAccess = channel.packetToAccessPoint(accessPoint);
+				if(toAccess.getDestinationAddress().equals(accessPoint.getAddress()))
 				{
-					//returning packet is added only if every condition is met
-					Packet packet2 = new Packet(toAccess.getSourceAddress(), accessPoint.getAddress());
-					channel.addPacketToChannel(packet2);
+					//if a client is authorised to use this access point
+					if(accessPoint.isAuthorised(client))
+					{
+						//returning packet is added only if every condition is met
+						Packet packet2 = new Packet(toAccess.getSourceAddress(), accessPoint.getAddress());
+						channel.addPacketToChannel(packet2);
+					}
 				}
+			}
+
+			//make a handshake between a client and previous access point with which this client was connected to
+			else
+			{
+				System.out.println(client + " disconnects from access point");
+				//get history of access points
+				ArrayList<AccessPoint> history = new ArrayList<AccessPoint>();
+				history = client.getHistoryOfAccessPoints();
+
+				//if client was previously connected to some access point ??? it's not true in the log2.txt
+				//connect them by a handshake
+				if(history.size() >= 1)
+				{
+					Handshake handshake = new Handshake(network, client, history.get(history.size()-1), client.getKey());	
+				}
+				//return info statement
+				else
+					System.out.println("It was first connection with an access point of this client!");
+
 			}
 		}
 		
-		goSleep(100);
+		goToSleep(100);
 	}
 
-	public void goSleep(int n)
+
+	//method which stops a program for a n miliseconds
+	public void goToSleep(int n)
 	{
 		try
 		{

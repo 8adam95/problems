@@ -19,11 +19,14 @@ public class AccessPoint extends NetworkDevice
 			authorisedToUse.add(client);
 	}
 
+
+	//method returns array list of clients which are authorised to use this access point
 	public ArrayList<Client> listOfAuthorised()
 	{
 		return authorisedToUse;
 	}
 
+	//method say whether client is authorised to connect to the access point
 	public boolean isAuthorised(Client client)
 	{
 		for(int i = 0; i < authorisedToUse.size(); i++)
