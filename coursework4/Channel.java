@@ -34,6 +34,15 @@ public class Channel
 		traffic.add(packet);
 	}
 
+	//method which add a packet to the channel
+	//but not print the statement
+	//useful when I "re-add" the same packets
+	public void addPacketToChannel2(Packet packet)
+	{
+		traffic.add(packet);
+	}
+
+
 
 	//method which remove the packet from the channel
 	public void removePacketFromChannel(Packet packet)
@@ -49,6 +58,9 @@ public class Channel
 		return traffic;
 	}
 
+
+	//method which check whether in the traffic of this channel exists a packet addressed to the access point
+	//if there is not return new packet calles out, with values (-1, -1)
 	public Packet packetToAccessPoint(AccessPoint accessPoint)
 	{
 		Packet out = new Packet("-1", "-1");

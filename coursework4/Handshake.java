@@ -115,6 +115,14 @@ public class Handshake
 	}
 
 
+	//function almost the same as add handshake packet, but this time I don't want to publish statement about added handshake packets
+	//otherwise program would show twice the same packets
+	public void addHandshakePacket(Channel channel, HandshakePacket handshakePacket, String a)
+	{
+		channel.addPacketToChannel2(handshakePacket);
+	}
+
+
 	//initiate connection between client and accessPoint in the network
 	//connect client to the same channel as accessPoint, 
 	//add new handshake packet to the channel
@@ -134,6 +142,18 @@ public class Handshake
 	public void disconnect(Network network, Client client, AccessPoint accessPoint)
 	{
 		network.addDeviceToNetwork(client, outOfRange);
+	}
+
+	public void reconnection(Network network, Client client, AccessPoint accessPoint)
+	{
+		HandshakePacket handshakePacket1 = new HandshakePacket(accessPoint.getAddress(), client.getAddress(), key);
+		HandshakePacket handshakePacket2 = new HandshakePacket(client.getAddress(), accessPoint.getAddress(), key);
+
+		channelOfAccessPoint = getChannelOfAccessPoint(network, accessPoint);
+		network.addDeviceToNetwork(client, channelOfAccessPoint);
+
+		addHandshakePacket(channelOfAccessPoint, handshakePacket1, "1");
+		addHandshakePacket(channelOfAccessPoint, handshakePacket2, "1");
 	}
 
 	//return channel in which is accessPoint

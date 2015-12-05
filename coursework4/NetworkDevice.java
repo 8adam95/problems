@@ -13,17 +13,21 @@ public class NetworkDevice
 		this.address = address;
 	}
 
+
+	//method which returns address of a network device
 	public String getAddress()
 	{
 		return address;
 	}
 
+	//method which set a key for a device
 	public void setKey(String key)
 	{
 		this.key = key;
 		System.out.println("Stored key: " + key);
 	}
 
+	//method which return a value of a key
 	public String getKey()
 	{
 		return key;

@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class Main{
 
 	public static void main(String[] args)
@@ -15,7 +17,6 @@ public class Main{
 
 		network.addChannelToNetwork(channel);
 		network.addChannelToNetwork(channel2);
-
 
 
 		//create acceess point with name and address.
@@ -42,7 +43,7 @@ public class Main{
 
 		//creating new hacker
 		Hacker romero = new Hacker("Romero");
-		romero.observe(tel, router);
+		romero.observe(tel, router, network);
 
 		//after initiated handshake
 
@@ -51,13 +52,40 @@ public class Main{
 
 		while(n > 0)
 		{
+			
 			n -= 1;
 			network.clearChannels();
 			network.networkActivity(channel, tel, tel.currentlyConnectedTo(), network);
 
-			romero.getAllTheTraffic(network);
-		}
 
+			//calling method which collects every packet in network
+			romero.getAllTheTraffic();
+
+			//then another method which provide only Handshake Packets
+			romero.selectHandshakePackets();
+
+			//System.out.println(romero.returnHandshakePacketsInNetwork());
+
+			//list of handshake packets in a network
+			ArrayList<HandshakePacket> handshakePackets = new ArrayList<HandshakePacket>();
+			handshakePackets = romero.returnHandshakePacketsInNetwork();
+
+			boolean isReconnectedHandshake = romero.checkHandshakePackets();
+
+			//if there was a successful handshake romero get a key
+			if(isReconnectedHandshake)
+			{
+				System.out.println("Hacker captures handshake!");
+				//romero safe the key of a handshake
+				romero.getKey();
+
+
+				//creating handshake between new client and target access point with achieved key
+				romero.createHandshake();
+			}
+
+
+		}
 
 
 		/*
@@ -72,10 +100,7 @@ public class Main{
 		Packet packet2 = new Packet("123", "34:123:234");
 		
 		channel2.addPacketToChannel(packet2);
-		
-		
-
-		
+				
 		Handshake handshake2 = new Handshake(network, tel2, router, "1111");
 
 		Handshake handshake3 = new Handshake(network, tel2, router, "123456");
@@ -84,26 +109,23 @@ public class Main{
 		Handshake handshake5 = new Handshake(network, tel23, router, "1112345234");
 		Handshake handshake6 = new Handshake(network, tel23, router, "1234567");
 
-
 		System.out.println("Traffic in channel = " + channel.trafficInChannel());
 		System.out.println("Traffic in channel2 = " + channel2.trafficInChannel());
-
 
 		//Authorised contains clients which do not necesserly passed 2 steps of a handshake 
 		//to be in a authorised it's enough to passed first part of a handshake
 		System.out.println("List of authorised = " + router.listOfAuthorised());
 
-
-/*		System.out.println(tel.currentlyConnectedTo());
+		System.out.println(tel.currentlyConnectedTo());
 		System.out.println(tel2.currentlyConnectedTo());
 		System.out.println(tel23.currentlyConnectedTo());
-*/		
+		
 
 		/*System.out.println(network.goodPair(tel, router));
 		System.out.println(network.goodPair(tel2, router));
 		System.out.println(network.goodPair(tel23, router));
 */
+		
 		System.out.println();
-
 	}		
 } 

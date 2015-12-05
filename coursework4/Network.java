@@ -14,6 +14,9 @@ public class Network
 	}
 
 
+	//method which return channel in which is network device
+	//if a network device is not in any channel it returns 
+	//specially created channel "outOfScope"
 	public Channel inWhichChannel(NetworkDevice networkDevice)
 	{
 		for(Channel key : devicesInChannel.keySet())
@@ -48,23 +51,33 @@ public class Network
 		}
 	}
 
-	
+	//method which add a device to a network
+	//it's important to first remove this device from a previous channel
+	//because the device can be only in one channel
 	public void addDeviceToNetwork(NetworkDevice networkDevice, Channel channel)
 	{
+		//removing device from a previous channel
 		removeDeviceFromChannel(networkDevice);
+
 		ArrayList<NetworkDevice> networkDevicesInChannel = new ArrayList<NetworkDevice>();
 
 		//For security I check whether a channel is in a list
+		//otherwise we could add a device to a channel which do not exist in a network
 		addChannelToNetwork(channel);
 
+		//get the all devices in a channel
 		if(devicesInChannel.containsKey(channel))
 			networkDevicesInChannel = devicesInChannel.get(channel);
 
+		//add a new device to list of already existing devices in this channel
 		networkDevicesInChannel.add(networkDevice);
 
+		//and return a updated list of devices to the channel
 		devicesInChannel.put(channel, networkDevicesInChannel);
 	}
 
+
+	//method add channel to a network
 	public void addChannelToNetwork(Channel channel)
 	{
 		//I don't want to have duplicates in an arraylist, so I add 
@@ -73,17 +86,22 @@ public class Network
 			channelsInNetwork.add(channel);
 	}
 
+	//method which return existing channels in a network
 	public ArrayList<Channel> listOfChannelsInNetwork()
 	{
 		return channelsInNetwork;
 	}
 
+	//method which clears all the channels
+	//it call another clearing method for every channel
 	public void clearChannels()
 	{
 		for(int i = 0; i < listOfChannelsInNetwork().size(); i++)
 			channelsInNetwork.get(i).clearr();
 	}
 
+	//method return list of devices in the channel
+	//if there is no devices return empty list 
 	public ArrayList<NetworkDevice> listOfDevicesInChannel(Channel channel)
 	{
 		if(devicesInChannel.containsKey(channel))
@@ -92,24 +110,29 @@ public class Network
 		return bum;
 	}
 
-	//
+	//method which provide sending packets between the client and the access point in the network
 	public void networkActivity(Channel channel, Client client, AccessPoint accessPoint, Network network)
 	{
 		System.out.println("Activity burst:");
 
-		if(accessPoint != null && accessPoint.isAuthorised(client))
+
+		//packets can be send only if the client is connected to the access point and the client
+		//is authorised to use this access point
+		if(client.currentlyConnectedTo() == accessPoint && accessPoint.isAuthorised(client))
 		{
 			//I check whether client will communicate or disconnect
 			boolean communicate = client.ableToCommunicate();
 
 			if(communicate)
 			{
-				Packet packet = new Packet(accessPoint.getAddress() ,client.getAddress());
+				//creating new packet from an access point to the client and adding it to the appropriate channel
+				Packet packet = new Packet(accessPoint.getAddress(), client.getAddress());
 				channel.addPacketToChannel(packet);
 
-				//Get the packet with destination address equals address of the accessPoint
-				//it there is no, it returns packet with values (-1, -1)
+				//Get the packet with the destination address equals address of the accessPoint
+				//if there is no, it returns packet with values (-1, -1)
 				Packet toAccess = channel.packetToAccessPoint(accessPoint);
+
 				if(toAccess.getDestinationAddress().equals(accessPoint.getAddress()))
 				{
 					//if a client is authorised to use this access point
@@ -126,6 +149,7 @@ public class Network
 			else
 			{
 				System.out.println(client + " disconnects from access point");
+
 				//get history of access points
 				ArrayList<AccessPoint> history = new ArrayList<AccessPoint>();
 				history = client.getHistoryOfAccessPoints();
@@ -134,7 +158,12 @@ public class Network
 				//connect them by a handshake
 				if(history.size() >= 1)
 				{
+					//I create a new handshake between client and access point with which client was previously connected to
 					Handshake handshake = new Handshake(network, client, history.get(history.size()-1), client.getKey());	
+
+					//I need to add handshake packets to the new channel
+					//because when a connection succeed handshake packets which were used are removed
+					handshake.reconnection(network, client, accessPoint);
 				}
 				//return info statement
 				else
@@ -142,7 +171,15 @@ public class Network
 
 			}
 		}
+		//if the client is not connected to the access point or is not authorised
+		//print a info statement
+		else
+		{
+			System.out.println("Client not authorised or client not connected!");
+		}
 		
+
+		//stop a program for 100ms
 		goToSleep(100);
 	}
 
