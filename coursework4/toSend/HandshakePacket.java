@@ -14,22 +14,6 @@ public class HandshakePacket extends Packet
 		return key;
 	}
 
-	public String returnHash()
-	{
-		int value = 1;
-		int pot = 37;
-		for(int i = 0; i < key.length(); i++)
-		{
-			char c = key.charAt(i);
-			value = value*pot + c;
-		}
-		//I need to cast a int into a String
-		String a = "";
-		a += value;
-		return a;
-	}
-
-	
 	public String toString()
 	{
 		return "HandshakePacket (Source: " + sourceAddress + " Destination: " + destinationAddress + ")";

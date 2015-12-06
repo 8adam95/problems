@@ -33,12 +33,6 @@ public class NetworkDevice
 		return key;
 	}
 
-	//calling hash function for a key
-	public String hashKey(Network network)
-	{
-		return network.hashFunction((String)key);
-	}
-
 	public String toString()
 	{
 		return name + " " + address;

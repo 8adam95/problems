@@ -4,13 +4,14 @@ import java.io.FileNotFoundException;
 
 public class Main{
 
-	public static void main(String[] args) throws FileNotFoundException
+	public static void main(String[] args)
 	{
 		System.out.println();
 
 
 		//firstly I need to create a network
 		Network network = new Network("Network");
+
 
 		//reading file keys.txt
 		//and for every key running hashFunction
@@ -32,7 +33,9 @@ public class Main{
 		{
 			System.out.println("Error while reading file line by line:" + e.getMessage());
         } 
-		
+
+
+
 		//then I can create channels and add them to created network
 		Channel channel = new Channel(1);
 		Channel channel2 = new Channel(2);
@@ -60,8 +63,6 @@ public class Main{
 		Packet packet1 = new Packet("f7:88:g9:hi:j1:22", "12:f9:37:d7:de:11");
 		Packet packet2 = new Packet("12:f9:37:d7:de:11","f7:88:g9:hi:j1:22");
 
-
-
 		//how many times I want to send packets
 		int n = 5;
 
@@ -70,7 +71,6 @@ public class Main{
 		romero.observe(tel, router, network);
 
 		//after initiated handshake
-
 		//cleaning channels in Network network
 		network.clearChannels();
 
@@ -81,7 +81,6 @@ public class Main{
 			//before I make a network activity I clear channels
 			network.clearChannels();
 			network.networkActivity(channel, tel, tel.currentlyConnectedTo(), network);
-
 
 			//calling method which collects every packet in network
 			romero.getAllTheTraffic();
@@ -103,11 +102,12 @@ public class Main{
 				System.out.println("Hacker captures handshake!");
 				//romero safe the key of a handshake
 				romero.getKey();
-
+				
 				//creating handshake between new client and target access point with achieved key
 				romero.createHandshake();
 			}
 		}
+
 
 		/*
 		channel.addPacketToChannel(packet);

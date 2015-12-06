@@ -170,7 +170,7 @@ public class Network
 
 					//I need to add handshake packets to the new channel
 					//because when a connection succeed handshake packets which were used are removed
-					handshake.reconnection(network, client, accessPoint);
+					handshake.reconnection(network, client, history.get(history.size()-1));
 				}
 				//return info statement
 				else
@@ -211,6 +211,7 @@ public class Network
 	{
 		return client.currentlyConnectedTo() == accessPoint && accessPoint.isAuthorised(client);
 	}
+
 	//method which return hash for a key
 	public String hashFunction(String key)
 	{
